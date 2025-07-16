@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla principal</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    }
+    body {
+      background-color: aliceblue;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }                         
+
+    .contenido {
+      flex: 1;
+    }
+    .aside{
+      height: 100vh;
+      width: 300px;
+      padding: 10px;
+      background: #dee1e6;
+      color: black;
+      position: fixed;
+      transition: all .4s ease;
+    }
+    .head{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      margin-bottom: 30px;
+    }
+    .head img{
+      width: 50px;
+      border-radius: 50%;
+    }
+    .head ion-icon {
+      font-size: 30px;
+      cursor: pointer;
+    }
+    .profile{
+      display: flex;
+      align-items: center;
+    }
+    .profile img {
+      margin-right: 10px;
+    }
+    .options div{
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+    .options div:hover{
+      background-color: rgba(255,255,255,0.254);
+      transition: all .4s ease-in-out;
+    }
+    .options ion-icon{
+      font-size: 1.4rem;
+      margin-right: 10px;
+    }
+    /*MODIFICADORES AL CERRAR EL MENU*/
+    .aside.active{
+      width: 70px;
+      transition: all .4s ease;
+    }
+    .aside.active .option,
+    .aside.active .profile{
+      display: none;
+    }
+    .aside.active .head ion-icon{
+      margin: auto;
+    }
+    .aside.active .options ion-icon{
+      margin: auto;
+    }
+    footer {
+      background: #dee1e6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px;
+      gap: 20px;
+      color: black;
+      height: 80;
+    }
+    .footer-center i {
+      margin: 0 8px;
+      font-size: 100px;
+      color: #000000;
+    }
+    .texto{
+        width: 200px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        position: obsulute;
+        padding-left: 60px;
+    }
+    /*linear-gradient(#f76c00,#3f1c5d);*/
+    /*linear-gradient(#3f1c5d,#3f1c5d);*/
+    </style>
+</head>
+<body>
+  <aside class="aside active" id="aside">
+    <div class="head">
+      <div class="profile">
+        <img src="Logoo.png ">
+        <p>SIEAP</p>
+      </div>
+      <ion-icon name="menu-outline" id="menu-outline"></ion-icon>
+    </div>
+    <div class="options">
+      <div>
+        <ion-icon name="grid-outline"></ion-icon>
+        <span class="option">Dashboard</span>
+      </div>
+      <div>
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span class="option">Agendar</span>
+      </div>
+      <div>
+        <ion-icon name="people-outline"></ion-icon>
+        <span class="option">Citas</span>
+      </div>
+      <div>
+        <ion-icon name="eye-outline"></ion-icon>
+        <span class="option">Observaciones</span>
+      </div>
+    </div>
+  </aside>
+  
+  <div class="contenido">
+    <!-- Aquí vas a meter contenido -->
+  </div>
+
+   <footer>
+    <div class="footer-left">
+      <p>Universidad Tecnológica de Tlaxcala</p>
+      <img src="logoSieap.png" alt="Sieap" class="texto">
+    </div>
+  </footer>
+
+
+
+
+    <script src="/script2.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

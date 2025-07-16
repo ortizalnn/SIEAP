@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio - SIEAP</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400&display=swap');
+
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+    body{ background:aliceblue; display:flex; flex-direction:column; min-height:100vh; }
+
+    .aside{ height:100vh; width:300px; padding:10px; background:#c9c9c9; position:fixed; transition:0.4s; }
+    .aside.active{ width:70px; }
+    .head{ display:flex; justify-content:space-between; align-items:center; height:50px; margin-bottom:30px; }
+    .head img{ width:50px; border-radius:50%; }
+    .head ion-icon{ font-size:30px; cursor:pointer; color:#000; }
+    .options div{ display:flex; align-items:center; padding:15px; border-radius:10px; cursor:pointer; margin-bottom:5px; }
+    .options div:hover{ background:rgba(255,255,255,0.25); }
+    .options ion-icon{ font-size:1.4rem; margin-right:10px; color:#000; }
+    .aside.active .option, .aside.active .profile{ display:none; }
+    .aside.active .head ion-icon{ margin:auto; }
+    .aside.active .options ion-icon{ margin:auto; }
+
+    .contenido{ margin-left:300px; flex:1; transition:0.4s; display:flex; justify-content:center; }
+    .contenido.shift{ margin-left:70px; }
+
+    .main-container{ padding:2rem; max-width:1200px; width:100%; }
+
+    h1{text-align:center; margin-bottom:1rem; color:#004d00;}
+    .descripcion{text-align:center; font-size:1.1rem; margin-bottom:2rem; max-width:800px; margin-inline:auto;}
+
+    .carousel{ display:flex; justify-content:center; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem 0; }
+    .card{ flex:0 0 300px; scroll-snap-align:center; background:white; border-radius:15px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:transform .3s; }
+    .card:hover{ transform:scale(1.05); }
+    .card img{ width:80px; margin-bottom:10px; }
+    .card ion-icon{ font-size:3rem; color:#006400; margin-bottom:10px; }
+    .card h3{ color:#003300; margin-bottom:.5rem; }
+    .card p{ font-size:.95rem; color:#333; }
+
+    footer{ background:#c9c9c9; display:flex; flex-direction:column; align-items:center; padding:5px; color:black; margin-top:auto; }
+    .texto-footer{ width:200px; height:50px; padding-left:60px; }
+  </style>
+</head>
+<body>
+
+  <aside class="aside active" id="aside">
+    <div class="head">
+      <div class="profile">
+        <img src="Logoo.png"><p>SIEAP</p>
+      </div>
+      <ion-icon name="menu-outline" id="toggleBtn"></ion-icon>
+    </div>
+    <div class="options">
+      <div><ion-icon name="home-outline"></ion-icon><a href="inicio.html" class="option">Inicio</a></div>
+      <div><ion-icon name="calendar-outline"></ion-icon><a href="agenda.html" class="option">Agendar</a></div>
+      <div><ion-icon name="people-outline"></ion-icon><a href="Citas.html" class="option">Citas</a></div>
+      <div><ion-icon name="eye-outline"></ion-icon><a href="Observaciones.html" class="option">Observaciones</a></div>
+      <div><ion-icon name="paper-plane-outline"></ion-icon><a href="Canalizaciones.html" class="option">Canalizaciones</a></div>
+    </div>
+  </aside>
+
+  <div class="contenido shift" id="contenido">
+    <div class="main-container">
+      <h1>Bienvenida/o a SIEAP</h1>
+      <p class="descripcion">El Sistema Integral de Espacios de Atención Psicológica (<strong>SIEAP</strong>) es una plataforma diseñada para estudiantes de la Universidad Tecnológica de Tlaxcala. Aquí podrás gestionar tus citas, observaciones y canalizaciones con atención profesional, ética y confidencial.</p>
+
+      <div class="carousel">
+        <div class="card"><img src="Logoo.png" alt="Logo SIEAP"><h3>SIEAP</h3><p>Tu espacio seguro y confidencial para recibir atención psicológica.</p></div>
+        <div class="card"><ion-icon name="calendar-outline"></ion-icon><h3>Agenda Fácil</h3><p>Programa tus citas en pocos pasos.</p></div>
+        <div class="card"><ion-icon name="chatbubbles-outline"></ion-icon><h3>Apoyo Profesional</h3><p>Especialistas en salud emocional.</p></div>
+        <div class="card"><ion-icon name="shield-checkmark-outline"></ion-icon><h3>Privacidad</h3><p>Tu información protegida.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Universidad Tecnológica de Tlaxcala</p>
+    <img src="logoSieap.png" class="texto-footer" alt="Logo pie">
+  </footer>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    document.getElementById('toggleBtn').addEventListener('click', () => {
+      const aside = document.getElementById('aside');
+      const contenido = document.getElementById('contenido');
+      aside.classList.toggle('active');
+      contenido.classList.toggle('shift');
+    });
+  </script>
+</body>
+</html>

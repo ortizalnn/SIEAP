@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f4f3;
+}
+.conteiner{
+    width: 800px;
+    height: 500px;
+    display: flex;
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgb(0, 0, 0 ,0.3);
+}
+.conteiner-form{
+    width: 100%;
+    overflow: hidden;
+}
+.conteiner-form Form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease-in;
+}
+.conteiner-form h2{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.social-network{
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    color: #3f1c5d;
+
+}
+.social-network ion-icon{
+    border: 1px solid rgb(205, 205, 205);
+    border-radius: 25px;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 25px;
+}
+.conteiner-form span{
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+.conteiner-input{
+    width: 300px;
+    height: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 15px;
+    background-color: #eee;
+    color: #3f1c5d;
+}
+.conteiner-input input{
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+}
+.conteiner-form a{
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+.button a{
+    color: #ffffff;
+}
+.button {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #226c41;
+  padding: 14px 20px;
+  border-radius: 5px;;
+  display: inline-block;
+  text-align: center;
+  width: 170px;
+  height: 45px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+
+}
+
+.button:hover {
+  background-color: #f76c0090;
+}
+/*Animation form*/
+.sing-up{
+    transform: translateX(-100%);
+}
+.conteiner.toggle .sing-in{
+    transform: translateX(100%);
+}
+.conteiner.toggle .sing-up{
+    transform: translateX(0);
+}
+/*WELCOME*/
+.conteiner-welcome{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transform: translateX(100%);
+    background:linear-gradient(#f76c00,#3f1c5d);
+    transition: transform 0.5s ease-in-out, border-radius 0.5s ease-in-out;
+    overflow: hidden;
+    border-radius: 50% 0 50% 0;
+}
+.conteiner.toggle .conteiner-welcome{
+    transform: translateX(0);
+    border-radius: 0 50% 0 50%;
+    background: linear-gradient(#f76c00,#3f1c5d);
+}
+.conteiner-welcome .welcome{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 50px;
+    color: white;
+    transition: transform 0.5s ease-in-out;
+}
+.welcome-sing-in{
+    transform: translateX(100%);
+}
+.welcome-welcome h3{
+    font-size: 40px;   
+}
+.conteiner-welcome p{
+    font-size: 14px;
+    text-align: center;
+}
+.conteiner-welcome .button{
+    border: 2px solid white;
+    background-color: transparent;
+}
+.conteiner.toggle .welcome-sing-in{
+    transform: translateX(0);
+}
+.conteiner.toggle .welcome-sing-up{
+    transform: translateX(-100%);
+}

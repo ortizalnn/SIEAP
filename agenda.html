@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agenta</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    }
+    body {
+      background-color: aliceblue;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }                         
+
+    .contenido {
+      flex: 1;
+    }
+    .aside{
+      height: 100vh;
+      width: 300px;
+      padding: 10px;
+      background: linear-gradient(#c9c9c9,#c9c9c9);
+      color: rgb(0, 0, 0);
+      position: fixed;
+      transition: all .4s ease;
+    }
+    .head{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      margin-bottom: 30px;
+    }
+    .head img{
+      width: 50px;
+      border-radius: 50%;
+    }
+    .head ion-icon {
+      font-size: 30px;
+      cursor: pointer;
+    }
+    .profile{
+      display: flex;
+      align-items: center;
+    }
+    .profile img {
+      margin-right: 10px;
+    }
+    .options div{
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+    .options div:hover{
+      background-color: rgba(255,255,255,0.254);
+      transition: all .4s ease-in-out;
+    }
+    .options ion-icon{
+      font-size: 1.4rem;
+      margin-right: 10px;
+    }
+    /*MODIFICADORES AL CERRAR EL MENU*/
+    .aside.active{
+      width: 70px;
+      transition: all .4s ease;
+    }
+    .aside.active .option,
+    .aside.active .profile{
+      display: none;
+    }
+    .aside.active .head ion-icon{
+      margin: auto;
+    }
+    .aside.active .options ion-icon{
+      margin: auto;
+    }
+    footer {
+      background: linear-gradient(#c9c9c9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px;
+      gap: 20px;
+      color: rgb(0, 0, 0);
+      height: 80;
+    }
+    ion-icon{
+      color: #000000;
+    }
+    .footer-center i {
+      margin: 0 8px;
+      font-size: 100px;
+      color: #000000;
+    }
+    .texto{
+        width: 200px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        position: obsulute;
+        padding-left: 60px;
+    }
+    .contenedor-agenda {
+      width: 90%;
+      max-width: 1100px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      gap: 30px;
+    }
+
+    .tabla-horarios {
+      flex: 3;
+    }
+
+    .tabla-horarios h3 {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f1f1f1;
+    }
+
+    .calendar-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .calendar-panel h4 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .calendar {
+      border: 1px solid #000000;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      background: #f9f9f9;
+      margin-bottom: 15px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .calendar input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #000000;
+    }
+
+    .btn-agendar {
+      background-color: #226c41;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-agendar:hover {
+      background-color: #1b5e20;
+    }
+    div{
+      text-align: center;
+    }
+    ol{
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: 0px;
+      border: 1px solid rgb(0, 0, 0);
+      gap: 8px;
+    }
+    .li{
+      text-align: right;
+    }
+    .first-day{
+      grid-column-start: 3;
+    }
+    .day-name{
+      background: #eee;
+      font-weight: bold;
+      text-align: center;
+    }
+    .titulo{
+      text-align: center;
+      margin-top: 20px;
+    }
+    h2{
+      margin-bottom: 15px;
+    }
+    .options a {
+      text-decoration: none;
+      color: black;         
+    }
+
+    .options a:hover {
+      color: #226c41;
+    }
+    </style>
+</head>
+<body>
+  <div class="titulo">
+    <h1>Agendar citas</h1>
+  </div>
+  <div class="contenedor-agenda">
+    <div class="tabla-horarios">
+      <h3><ion-icon name="calendar"></ion-icon> MAYO 04, 2025 - AGOSTO 31, 2025</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>9:00 - 10:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>10:00 - 11:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>11:00 - 12:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>12:00 - 13:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>13:00 - 14:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>14:00 - 15:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Calendario visual -->
+     <div>
+      <h2>Julio 2025</h2>
+      <ol>
+        <li class="day-name">LU.</li>
+        <li class="day-name">MA.</li>
+        <li class="day-name">MI.</li>
+        <li class="day-name">JU.</li>
+        <li class="day-name">VI.</li>
+        <li class="day-name">SA.</li>
+        <li class="day-name">DO.</li>
+        <li class="first-day">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+        <li>18</li>
+        <li>19</li>
+        <li>20</li>
+        <li>21</li>
+        <li>22</li>
+        <li>23</li>
+        <li>24</li>
+        <li>25</li>
+        <li>26</li>
+        <li>27</li>
+        <li>28</li>
+        <li>29</li>
+        <li>30</li>
+        <li>31</li>
+      </ol>
+       <div class="calendar-panel">
+        <div class="calendar">
+          <input type="text" id="fechaPicker" placeholder="Elige su cuatrimestre">
+        </div>
+            <button class="btn-agendar">Agendar</button>
+        </div>
+     </div>
+  </div>
+  <aside class="aside active" id="aside">
+    <div class="head">
+      <div class="profile">
+        <img src="Logoo.png">
+        <p>SIEAP</p>
+      </div>
+      <ion-icon name="menu-outline" id="menu-outline"></ion-icon>
+    </div>
+    <div class="options">
+      <div>
+        <ion-icon name="calendar-outline"></ion-icon>
+        <a href="agenda.html" class="option">Agendar</a>
+      </div>
+      <div>
+        <ion-icon name="people-outline"></ion-icon>
+        <a href="Citas.html" class="option">Citas</a>
+      </div>
+      <div>
+        <ion-icon name="eye-outline"></ion-icon>
+        <a href="Observaciones.html" class="option">Observaciones</a>
+      </div>
+      <div>
+        <ion-icon name="paper-plane-outline"></ion-icon>
+        <a href="Canalizaciones.html" class="option">Canalizaciones</a>
+      </div>
+    </div>
+  </aside>
+  
+  <div class="contenido">
+    <!-- Aquí vas a meter contenido -->
+  </div>
+
+   <footer>
+    <div class="footer-left">
+      <p>Universidad Tecnológica de Tlaxcala</p>
+      <img src="logoSieap.png" alt="Sieap" class="texto">
+    </div>
+  </footer>
+
+
+
+
+    <script src="/script2.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
