@@ -1,88 +1,398 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio de Sesión - SIEAP</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #2f2f2f;
+    }
+
+    /* Header */
+    .main-header {
+      background: #005a00;
+      color: white;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .main-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    .main-logo img {
+      height: 42px;
+      width: 42px;
+      object-fit: contain;
+    }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+    }
+    .hamburger {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      width: 28px;
+      height: 22px;
+      justify-content: center;
+    }
+    .hamburger span {
+      display: block;
+      height: 3.5px;
+      background: white;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Nav menu */
+    nav.main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+    }
+    nav.main-nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      padding: 9px 14px;
+      border-radius: 7px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav.main-nav ul li a:hover,
+    nav.main-nav ul li a:focus {
+      background-color: #007d00;
+      outline: none;
+      color: #e6f4e6;
+    }
+
+    /* Responsive menu */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+      nav.main-nav {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background: #005a00;
+        width: 220px;
+        height: calc(100vh - 60px);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        padding-top: 1rem;
+        box-shadow: -5px 0 8px rgba(0,0,0,0.25);
+        border-radius: 0 0 0 8px;
+        z-index: 1001;
+      }
+      nav.main-nav ul {
+        flex-direction: column;
+        gap: 0;
+      }
+      nav.main-nav ul li {
+        margin-bottom: 1.25rem;
+      }
+      nav.main-nav ul li a {
+        display: block;
+        padding: 1rem 1.75rem;
+        font-size: 1.1rem;
+      }
+      #menu-toggle:checked + .hamburger + nav.main-nav {
+        transform: translateX(0);
+      }
+    }
+
+    /* Container login/registro */
+    main.container {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2.5rem 1.5rem;
+    }
+    .login-box {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      max-width: 920px;
+      width: 100%;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .form-section:not(:last-child) {
+      border-right: 2px solid #007d00;
+    }
+    .form-section h2 {
+      color: #005a00;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1.3rem;
+      margin-bottom: 1.25rem;
+    }
+    .social-icons ion-icon {
+      font-size: 30px;
+      color: #007d00;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .social-icons ion-icon:hover {
+      color: #004200;
+    }
+    .form-section span {
+      font-size: 0.95rem;
+      color: #4a4a4a;
+      margin-bottom: 1.75rem;
+      display: block;
+      letter-spacing: 0.02em;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      border: 1.75px solid #bdbdbd;
+      border-radius: 12px;
+      padding: 0.8rem 1.1rem;
+      margin-bottom: 1.4rem;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+      background: #fafafa;
+    }
+    .input-group:focus-within {
+      border-color: #007d00;
+      background: white;
+      box-shadow: 0 0 5px rgba(0,125,0,0.25);
+    }
+    .input-group ion-icon {
+      color: #007d00;
+      font-size: 22px;
+      margin-right: 12px;
+    }
+    .input-group input {
+      border: none;
+      outline: none;
+      font-size: 1.05rem;
+      background: transparent;
+      width: 100%;
+      color: #222;
+      font-weight: 500;
+    }
+    .input-group input::placeholder {
+      color: #9e9e9e;
+      font-style: italic;
+    }
+
+    a.forgot-password {
+      font-size: 0.9rem;
+      color: #007d00;
+      text-decoration: none;
+      margin-bottom: 1.75rem;
+      display: inline-block;
+      transition: color 0.3s ease;
+      font-weight: 600;
+    }
+    a.forgot-password:hover,
+    a.forgot-password:focus {
+      color: #004200;
+      outline: none;
+      text-decoration: underline;
+    }
+
+    button.btn, a.btn {
+      background-color: #007d00;
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      user-select: none;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.03em;
+    }
+    button.btn:hover,
+    a.btn:hover,
+    button.btn:focus,
+    a.btn:focus {
+      background-color: #004200;
+      outline: none;
+    }
+
+    .welcome-section {
+      flex: 1;
+      background: #005a00;
+      color: white;
+      padding: 3rem 3.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-radius: 0 18px 18px 0;
+      gap: 1.2rem;
+      user-select: none;
+    }
+    .welcome-section h3 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.03em;
+    }
+    .welcome-section p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 320px;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+    .welcome-section img {
+      margin: 1.3rem 0;
+      max-width: 190px;
+      height: auto;
+    }
+    .welcome-section .btn {
+      background-color: white;
+      color: #005a00;
+      font-weight: 800;
+      width: 150px;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.5rem;
+      border-radius: 16px;
+    }
+    .welcome-section .btn:hover,
+    .welcome-section .btn:focus {
+      background-color: #d0d0d0;
+      color: #003200;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .login-box {
+        flex-direction: column;
+      }
+      .form-section {
+        border-right: none !important;
+        padding: 2.5rem 2rem;
+      }
+      .welcome-section {
+        border-radius: 0 0 18px 18px;
+        padding: 2.5rem 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    
-    <div class="conteiner">
-        <div class="conteiner-form">
-            <form class="sing-in">
-                <h2>Iniciar sesión</h2>
-                <div class="social-network">
-                    <ion-icon name="logo-facebook"></ion-icon>
-                    <ion-icon name="logo-youtube"></ion-icon>
-                    <ion-icon name="logo-tiktok"></ion-icon>
-                    <ion-icon name="logo-whatsapp"></ion-icon>
-                </div>
-                <span>Use su correo y contraseña</span>
-                <div class="conteiner-input">
-                    <ion-icon name="mail"></ion-icon>
-                    <input type="text" placeholder="Correo">
-                </div>
-                <div class="conteiner-input">
-                    <ion-icon name="lock-closed"></ion-icon>
-                    <input type="password" placeholder="Contraseña">
-                </div>
-                <a href="">¿Olvidaste tu contraseña?</a>
-                <a href="agenda.html" class="button">INICIAR SESIÓN</a>
-            </form>
 
-        </div>
-        <div class="conteiner-form">
-            <form class="sing-up">
-                <h2>Registrarse</h2>
-                <div class="social-network">
-                    <ion-icon name="logo-facebook"></ion-icon>
-                    <ion-icon name="logo-youtube"></ion-icon>
-                    <ion-icon name="logo-tiktok"></ion-icon>
-                    <ion-icon name="logo-whatsapp"></ion-icon>
-                </div>
-                <span>Use su correo electronico para registrarse</span>
-                <div class="conteiner-input">
-                    <ion-icon name="person"></ion-icon>
-                    <input type="text" placeholder="Nombre">
-                </div>
-                <div class="conteiner-input">
-                    <ion-icon name="mail"></ion-icon>
-                    <input type="text" placeholder="Correo">
-                </div>
-                <div class="conteiner-input">
-                    <ion-icon name="lock-closed"></ion-icon>
-                    <input type="password" placeholder="Contraseña">
-                </div>
-            <button class="button"></a>REGISTRARSE</button>
-            </form>
-            
-        </div>
+<header class="main-header">
+  <div class="main-logo">
+    <img src="Logoo.png" alt="Logo SIEAP" />
+    <p>SIEAP</p>
+  </div>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+  <label for="menu-toggle" class="hamburger" aria-label="Abrir menú de navegación" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+</header>
 
-        <div class="conteiner-welcome">
-            <div class="welcome-sing-up welcome">
-                <h3>¡BIENVENIDO A SIEAP!</h3>
-                <P>Ingrese sus datos personales para usar todas las funciones del sistema</P>
-                <img src="Logo.png" width="200px" height="150px">
-                <button class="button" id="btn-sing-up">REGISTRARSE</button>
-            </div>
-            <div class="welcome-sing-in welcome">
-                <h3>¡HOLA!</h3>
-                <p>Registre sus datos personales para usar todas las funciones del sitema</p>
-                <img src="Logo.png" width="200px" height="150px">
-                <button class="button" id="btn-sing-in">INICIAR SESIÓN</button>
+<main class="container" role="main">
+  <div class="login-box" aria-label="Formulario de inicio de sesión y registro">
+    <section class="form-section" aria-labelledby="signin-title">
+      <h2 id="signin-title">Iniciar sesión</h2>
+      <div class="social-icons" aria-label="Iniciar sesión con redes sociales">
+        <ion-icon name="logo-facebook" title="Facebook"></ion-icon>
+        <ion-icon name="logo-youtube" title="YouTube"></ion-icon>
+        <ion-icon name="logo-tiktok" title="TikTok"></ion-icon>
+        <ion-icon name="logo-whatsapp" title="WhatsApp"></ion-icon>
+      </div>
+      <span>Ingrese su correo electrónico y contraseña para acceder</span>
+      <div class="input-group">
+        <ion-icon name="mail"></ion-icon>
+        <input type="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required />
+      </div>
+      <div class="input-group">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" placeholder="Contraseña" aria-label="Contraseña" required />
+      </div>
+      <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
+      <a href="agenda.html" class="btn" role="button">Iniciar sesión</a>
+    </section>
 
-            </div>
+    <section class="form-section" aria-labelledby="signup-title">
+      <h2 id="signup-title">Crear cuenta</h2>
+      <div class="social-icons" aria-label="Registrarse con redes sociales">
+        <ion-icon name="logo-facebook" title="Facebook"></ion-icon>
+        <ion-icon name="logo-youtube" title="YouTube"></ion-icon>
+        <ion-icon name="logo-tiktok" title="TikTok"></ion-icon>
+        <ion-icon name="logo-whatsapp" title="WhatsApp"></ion-icon>
+      </div>
+      <span>Regístrese usando su correo electrónico</span>
+      <div class="input-group">
+        <ion-icon name="person"></ion-icon>
+        <input type="text" placeholder="Nombre completo" aria-label="Nombre completo" required />
+      </div>
+      <div class="input-group">
+        <ion-icon name="mail"></ion-icon>
+        <input type="email" placeholder="Correo electrónico" aria-label="Correo electrónico" required />
+      </div>
+      <div class="input-group">
+        <ion-icon name="lock-closed"></ion-icon>
+        <input type="password" placeholder="Contraseña" aria-label="Contraseña" required />
+      </div>
+      <button class="btn" type="submit" aria-label="Registrarse">Registrarse</button>
+    </section>
 
-        </div>
-        
-    </div>
+    <section class="welcome-section" aria-label="Bienvenida al sistema">
+      <h3>¡Bienvenido a SIEAP!</h3>
+      <p>Por favor, complete sus datos para acceder a todas las funcionalidades del sistema.</p>
+      <img src="Logo.png" alt="Logo SIEAP" />
+      <button class="btn" type="button" aria-label="Ir a registro">Registrarse</button>
+    </section>
+  </div>
+</main>
 
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-
-    <script src="/script.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

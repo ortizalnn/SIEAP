@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acerca de Nosotros - Universidad Tecnológica de Tlaxcala</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400&display=swap');
+
+  /* Reset y tipografía */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif;
+  }
+  body {
+    background-color: aliceblue;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+  }
+
+  /* ASIDE lateral */
+  .aside {
+    height: 100vh;
+    width: 300px;
+    padding: 10px;
+    background: #c9c9c9;
+    position: fixed;
+    transition: width 0.4s;
+    overflow: hidden;
+  }
+  .aside.active {
+    width: 70px;
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin-bottom: 30px;
+  }
+  .head img {
+    width: 50px;
+    border-radius: 50%;
+  }
+  .head ion-icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: #000;
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #004d00;
+  }
+  .profile p {
+    font-size: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .options div {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: background 0.25s;
+  }
+  .options div:hover {
+    background: rgba(255,255,255,0.25);
+  }
+  .options ion-icon {
+    font-size: 1.4rem;
+    margin-right: 10px;
+    color: #000;
+  }
+  .aside.active .profile p,
+  .aside.active .options div > a {
+    display: none;
+  }
+  .aside.active .head ion-icon {
+    margin: auto;
+  }
+  .aside.active .options ion-icon {
+    margin: auto;
+  }
+
+  /* Contenido principal desplazado por aside */
+  .contenido {
+    margin-left: 300px;
+    flex: 1;
+    padding: 20px 30px;
+    transition: margin-left 0.4s;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .contenido.shift {
+    margin-left: 70px;
+  }
+
+  /* Título principal */
+  h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #006400;
+    font-weight: 700;
+  }
+
+  /* Contenedor del carrusel */
+  .carousel-container {
+    max-width: 900px;
+    margin: 40px auto 60px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slide {
+    min-width: 100%;
+    padding: 25px 30px;
+    box-sizing: border-box;
+  }
+
+  .slide h2 {
+    color: #004d00;
+    margin-bottom: 15px;
+    font-weight: 600;
+    border-bottom: 2px solid #006400;
+    padding-bottom: 8px;
+  }
+
+  .slide p {
+    font-size: 1rem;
+    text-align: justify;
+    color: #222;
+    line-height: 1.6;
+  }
+
+  /* Botones navegación */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #006400;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    user-select: none;
+    z-index: 10;
+  }
+  .nav-btn:hover {
+    opacity: 1;
+  }
+  #prevBtn {
+    left: 10px;
+  }
+  #nextBtn {
+    right: 10px;
+  }
+
+  /* Paginación puntos */
+  .dots {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .dot.active {
+    background-color: #006400;
+  }
+
+  /* Footer */
+  footer {
+    background: #c9c9c9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    color: black;
+    margin-top: auto;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  .texto-footer {
+    width: 200px;
+    height: 50px;
+    padding-left: 60px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .contenido {
+      margin-left: 70px;
+      padding: 20px 15px;
+    }
+    .aside {
+      width: 70px !important;
+    }
+  }
+  @media (max-width: 600px) {
+    body {
+      flex-direction: column;
+    }
+    .aside {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .contenido {
+      margin-left: 0;
+      padding-bottom: 70px; /* para footer */
+    }
+    footer {
+      position: relative;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ASIDE LATERAL -->
+<aside class="aside active" id="aside">
+  <div class="head">
+    <div class="profile">
+      <img src="Logoo.png" alt="Logo SIEAP">
+      <p>SIEAP</p>
+    </div>
+    <ion-icon name="menu-outline" id="toggleBtn" aria-label="Menú"></ion-icon>
+  </div>
+  <div class="options">
+    <div><ion-icon name="home-outline"></ion-icon><a href="inicio.html" class="option">Inicio</a></div>
+    <div><ion-icon name="calendar-outline"></ion-icon><a href="agenda.html" class="option">Agendar</a></div>
+    <div><ion-icon name="people-outline"></ion-icon><a href="Citas.html" class="option">Citas</a></div>
+    <div><ion-icon name="eye-outline"></ion-icon><a href="Observaciones.html" class="option">Observaciones</a></div>
+    <div><ion-icon name="paper-plane-outline"></ion-icon><a href="Canalizaciones.html" class="option">Canalizaciones</a></div>
+    <div><ion-icon name="information-circle-outline"></ion-icon><a href="nosotros.html" class="option">Nosotros</a></div>
+  </div>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="contenido shift" id="contenido">
+
+  <h1>Acerca de Nosotros</h1>
+
+  <div class="carousel-container" aria-label="Carrusel de información acerca de la universidad">
+    <div class="carousel-slides" id="carouselSlides">
+
+      <section class="slide" aria-labelledby="slide1-title" role="group" aria-roledescription="slide" aria-label="Historia y Fundación">
+        <h2 id="slide1-title">Historia y Fundación</h2>
+        <p>
+          Situada en el municipio de Huamantla, Tlaxcala, la Universidad Tecnológica de Tlaxcala fue fundada el 14 de febrero de 1996 por decreto del Ejecutivo Estatal, iniciando actividades el 3 de septiembre del mismo año. Como parte del Subsistema de Universidades Tecnológicas de la Secretaría de Educación Pública, nuestra misión es impulsar la educación tecnológica universitaria a través de acciones académicas y una sólida vinculación con el sector productivo, promoviendo el desarrollo integral de individuos y sociedad.
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="slide2-title" role="group" aria-roledescription="slide" aria-label="Modelo Educativo y Financiamiento">
+        <h2 id="slide2-title">Modelo Educativo y Financiamiento</h2>
+        <p>
+          La UTT es un organismo público descentralizado que recibe financiamiento equitativo de la federación y del Gobierno del Estado de Tlaxcala. Nuestro modelo educativo se fundamenta en competencias profesionales con un enfoque práctico del 60% y teórico del 40%, apoyado en principios de libertad académica e investigación, para ofrecer una formación pertinente y de calidad.
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="slide3-title" role="group" aria-roledescription="slide" aria-label="Reconocimientos y Calidad Académica">
+        <h2 id="slide3-title">Reconocimientos y Calidad Académica</h2>
+        <p>
+          Hemos sido galardonados con el Premio Estatal a la Calidad en 2002 y 2006, y reconocidos por la Secretaría de Educación Pública en múltiples ocasiones (2007-2013), destacando por la excelencia de nuestros planes y programas acreditados por CACEI.
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="slide4-title" role="group" aria-roledescription="slide" aria-label="Trayectoria Profesional de Nuestros Egresados">
+        <h2 id="slide4-title">Trayectoria Profesional de Nuestros Egresados</h2>
+        <p>
+          Nuestros egresados obtienen el título de Técnico Superior Universitario tras completar un plan de estudios de dos años. Posteriormente, pueden incorporarse al ámbito laboral o continuar con estudios de ingeniería durante un año y ocho meses, alcanzando el título de Ingeniero y fortaleciendo así su perfil profesional.
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="slide5-title" role="group" aria-roledescription="slide" aria-label="Identidad Visual y Logotipo">
+        <h2 id="slide5-title">Identidad Visual y Logotipo</h2>
+        <p>
+          Nuestra identidad visual parte de la tipografía corporativa del Subsistema de Universidades Tecnológicas, adaptada para fortalecer el posicionamiento regional. El logotipo "UTT" representa la fusión entre lo humano y tecnológico, simbolizando orgullo regional y vocación global. Originalmente más complejo, el diseño se simplificó para ganar funcionalidad y estética, resaltando movilidad, esfuerzo y superación.
+        </p>
+        <p>
+          La leyenda "Universidad Tecnológica de Tlaxcala", en tipografía Arial negra, acompaña al logotipo para diferenciar nuestra institución dentro del panorama nacional de universidades tecnológicas.
+        </p>
+      </section>
+
+    </div>
+
+    <button class="nav-btn" id="prevBtn" aria-label="Anterior">&#10094;</button>
+    <button class="nav-btn" id="nextBtn" aria-label="Siguiente">&#10095;</button>
+
+    <div class="dots" role="tablist" aria-label="Navegación del carrusel">
+      <span class="dot active" data-index="0" role="tab" tabindex="0" aria-selected="true" aria-controls="slide1-title" aria-label="Historia y Fundación"></span>
+      <span class="dot" data-index="1" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide2-title" aria-label="Modelo Educativo y Financiamiento"></span>
+      <span class="dot" data-index="2" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide3-title" aria-label="Reconocimientos y Calidad Académica"></span>
+      <span class="dot" data-index="3" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide4-title" aria-label="Trayectoria Profesional de Nuestros Egresados"></span>
+      <span class="dot" data-index="4" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide5-title" aria-label="Identidad Visual y Logotipo"></span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Universidad Tecnológica de Tlaxcala</p>
+    <img src="logoSieap.png" class="texto-footer" alt="Logo pie">
+  </footer>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+  // Toggle sidebar
+  const toggleBtn = document.getElementById('toggleBtn');
+  const aside = document.getElementById('aside');
+  const contenido = document.querySelector('.contenido');
+  toggleBtn.addEventListener('click', () => {
+    aside.classList.toggle('active');
+    contenido.classList.toggle('shift');
+  });
+
+  // Carousel logic
+  const slides = document.getElementById('carouselSlides');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const totalSlides = dots.length;
+  let currentIndex = 0;
+
+  function updateCarousel() {
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    dots.forEach((dot, idx) => {
+      if (idx === currentIndex) {
+        dot.classList.add('active');
+        dot.setAttribute('aria-selected', 'true');
+        dot.tabIndex = 0;
+      } else {
+        dot.classList.remove('active');
+        dot.setAttribute('aria-selected', 'false');
+        dot.tabIndex = -1;
+      }
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+    updateCarousel();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+    updateCarousel();
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      currentIndex = parseInt(dot.dataset.index);
+      updateCarousel();
+    });
+    dot.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        currentIndex = parseInt(dot.dataset.index);
+        updateCarousel();
+      }
+    });
+  });
+
+  // Swipe support for mobile devices
+  let startX = 0;
+  let endX = 0;
+  slides.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+  slides.addEventListener('touchmove', e => {
+    endX = e.touches[0].clientX;
+  });
+  slides.addEventListener('touchend', e => {
+    if (startX - endX > 50) {
+      nextBtn.click();
+    } else if (endX - startX > 50) {
+      prevBtn.click();
+    }
+  });
+
+  // Inicializar carousel
+  updateCarousel();
+</script>
+
+</body>
+</html>
